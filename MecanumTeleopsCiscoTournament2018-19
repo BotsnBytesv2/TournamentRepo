@@ -64,6 +64,9 @@ public class Mecanum_Math extends LinearOpMode {
     private DcMotor frontrightmotor = null;
     private DcMotor backleftmotor = null;
     private DcMotor backrightmotor = null;
+    private DcMotor leftArm = null;
+    private DcMotor rightArm = null;
+    private DcMotor inputArm = null;
     
 
     @Override
@@ -77,11 +80,18 @@ public class Mecanum_Math extends LinearOpMode {
         frontrightmotor = hardwareMap.get(DcMotor.class, "frontrightmotor");
         backrightmotor = hardwareMap.get(DcMotor.class, "backrightmotor");
         backleftmotor = hardwareMap.get(DcMotor.class, "backleftmotor");
+        leftArm = hardwareMap.get(DcMotor.class, "leftLift");
+        rightArm = hardwareMap.get(DcMotor.class, "rightLift");
+        inputArm = hardwareMap.get(DcMotor.class, "inputArm");
         
         frontleftmotor.setPower(0.0);
         frontrightmotor.setPower(0.0);
         backleftmotor.setPower(0.0);
         backrightmotor.setPower(0.0);
+        leftArm.setPower(0.0);
+        rightArm.setPower(0.0);
+        inputArm.setPower(0.0);
+        
         
         
         // Wait for the game to start (driver presses PLAY)
@@ -95,6 +105,7 @@ public class Mecanum_Math extends LinearOpMode {
             
             double rightMove;
             double leftMove;
+            double onePower;
 
             
             // Choose to drive using either Tank Mode, or POV Mode
@@ -102,7 +113,7 @@ public class Mecanum_Math extends LinearOpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            //onePower = -gamepad2.left_stick_y;
+            onePower = -gamepad2.left_stick_y * 0.5;
             
             rightMove = -gamepad1.right_stick_y;
             leftMove = gamepad1.left_stick_y;
@@ -127,9 +138,29 @@ public class Mecanum_Math extends LinearOpMode {
                 frontrightmotor.setPower(rightMove);
                 backrightmotor.setPower(rightMove);
             }
+            if(gamepad2.left_stick_y<0){
+                inputArm.setPower(onePower);
+            }
+            else if(gamepad2.left_stick_y>0){
+                inputArm.setPower(onePower);
+            }
+            else{
+                inputArm.setPower(0.15);
+            }
+            if(gamepad2.right_bumper){
+                leftArm.setPower(-0.75);
+                rightArm.setPower(0.75);
+            }
+            else if(gamepad2.left_bumper){
+                leftArm.setPower(0.75);
+                rightArm.setPower(-0.75);
+            }
+            else{
+            leftArm.setPower(0.0);
+            rightArm.setPower(0.0);
+            }
             
-           
-
+            
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             //telemetry.addData("Motors", "one (%.2f), two (%.2f), servoone (%.2f), servotwo (%.2f)", onePower, twoPower, servo1pos, servo2pos);
