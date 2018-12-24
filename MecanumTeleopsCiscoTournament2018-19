@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.Range;
 **/
 
 
-@TeleOp(name = "All_Directional_Strafe", group = "Concept")
+@TeleOp(name = "Tournament_Teleops", group = "Concept")
 
 
 public class Mecanum_Math extends LinearOpMode {
@@ -80,8 +80,8 @@ public class Mecanum_Math extends LinearOpMode {
         frontrightmotor = hardwareMap.get(DcMotor.class, "frontrightmotor");
         backrightmotor = hardwareMap.get(DcMotor.class, "backrightmotor");
         backleftmotor = hardwareMap.get(DcMotor.class, "backleftmotor");
-        leftArm = hardwareMap.get(DcMotor.class, "leftLift");
-        rightArm = hardwareMap.get(DcMotor.class, "rightLift");
+        leftArm = hardwareMap.get(DcMotor.class, "hanging1");
+        rightArm = hardwareMap.get(DcMotor.class, "hanging2");
         inputArm = hardwareMap.get(DcMotor.class, "inputArm");
         
         frontleftmotor.setPower(0.0);
