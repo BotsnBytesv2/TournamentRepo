@@ -66,15 +66,16 @@ public class CraterPathRight  extends LinearOpMode{
 
         if (opModeIsActive()) {
         
-     moveForward(1069, 0.4);
-     spinRight(1120, 0.4);
-     moveForward(2138, 0.4);
-     moveBackward(2138, 0.4);
-     spinLeft(3360, 0.4);
-     moveForward(3564, 0.4);
-     spinLeft(1120, 0.4);
-     moveForward(4994, 0.4);
-     moveBackward(7128, 0.4);
+     moveForward(100, 0.4);
+     spinRight(110, 0.4);
+     moveForward(400, 0.4);
+     moveBackward(400, 0.4);
+     spinLeft(1350, 0.4);
+     moveForward(2485, 0.4);
+     spinLeft(680, 0.4);
+     moveForward(3600, 0.4);
+     //spinRight(80, 0.4);
+     moveBackward(5800, 0.4);
         
         }
         
@@ -254,7 +255,7 @@ public class CraterPathRight  extends LinearOpMode{
         stopMotors();
         
     }
-    public void spinRight(int distance, double power){
+    public void spinLeft(int distance, double power){
         frontleft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         frontright.setMode(DcMotor.RunMode.RESET_ENCODERS);
         backleft.setMode(DcMotor.RunMode.RESET_ENCODERS);
@@ -280,7 +281,7 @@ public class CraterPathRight  extends LinearOpMode{
     }
         stopMotors();
     }
-    public void spinLeft(int distance, double power){
+    public void spinRight(int distance, double power){
         frontleft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         frontright.setMode(DcMotor.RunMode.RESET_ENCODERS);
         backleft.setMode(DcMotor.RunMode.RESET_ENCODERS);
