@@ -66,14 +66,14 @@ public class CraterPathCenter  extends LinearOpMode{
 
         if (opModeIsActive()) {
         
-     moveForward(500, 0.4);
+     moveForward(600, 0.4);
      moveBackward(400, 0.4);
      spinLeft(1240, 0.4);
      moveForward(2485, 0.4);
      spinLeft(680, 0.4);
      moveForward(3600, 0.4);
      //spinRight(80, 0.4);
-     moveBackward(5800, 0.4);
+     moveBackward(5900, 0.4);
         
         }
         
