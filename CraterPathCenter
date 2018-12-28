@@ -19,9 +19,9 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-@Autonomous(name = "CraterPathRight", group = "V1 Concept")
+@Autonomous(name = "CraterPathCenter", group = "V1 Concept")
 
-public class CraterPathRight  extends LinearOpMode{
+public class CraterPathCenter  extends LinearOpMode{
     
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor frontright = null;
