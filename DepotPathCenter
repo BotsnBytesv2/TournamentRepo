@@ -66,9 +66,9 @@ public class DepotPathCenter  extends LinearOpMode{
 
         if (opModeIsActive()) {
         
-     moveForward(2138, 0.4);
-     spinRight(1120, 0.4);
-     moveBackward(3564, 0.4);
+     moveForward(4200, 0.4);
+     spinLeft(320, 0.4);
+     moveBackward(7100, 0.4);
         
         }
         
@@ -248,7 +248,7 @@ public class DepotPathCenter  extends LinearOpMode{
         stopMotors();
         
     }
-    public void spinRight(int distance, double power){
+    public void spinLeft(int distance, double power){
         frontleft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         frontright.setMode(DcMotor.RunMode.RESET_ENCODERS);
         backleft.setMode(DcMotor.RunMode.RESET_ENCODERS);
@@ -274,7 +274,7 @@ public class DepotPathCenter  extends LinearOpMode{
     }
         stopMotors();
     }
-    public void spinLeft(int distance, double power){
+    public void spinRight(int distance, double power){
         frontleft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         frontright.setMode(DcMotor.RunMode.RESET_ENCODERS);
         backleft.setMode(DcMotor.RunMode.RESET_ENCODERS);
