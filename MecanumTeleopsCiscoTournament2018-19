@@ -150,12 +150,12 @@ public class Tournament_Teleops extends LinearOpMode {
             
             
             if(gamepad2.right_bumper){
-                hanging1.setPower(0.75);
-                hanging2.setPower(-0.75);
-            }
-            else if(gamepad2.left_bumper){
                 hanging1.setPower(-0.75);
                 hanging2.setPower(0.75);
+            }
+            else if(gamepad2.left_bumper){
+                hanging1.setPower(0.75);
+                hanging2.setPower(-0.75);
             }
             else{
                 hanging1.setPower(0.0);
