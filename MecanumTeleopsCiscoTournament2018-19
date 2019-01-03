@@ -31,6 +31,7 @@ Copyright (c) 2017 FIRST. All rights reserved.
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -56,7 +57,7 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "Tournament_Teleops", group = "Concept")
 
 
-public class Mecanum_Math extends LinearOpMode {
+public class Tournament_Teleops extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
    
@@ -64,9 +65,11 @@ public class Mecanum_Math extends LinearOpMode {
     private DcMotor frontrightmotor = null;
     private DcMotor backleftmotor = null;
     private DcMotor backrightmotor = null;
-    private DcMotor leftArm = null;
-    private DcMotor rightArm = null;
-    private DcMotor inputArm = null;
+    private DcMotor hanging1 = null;
+    private DcMotor hanging2 = null;
+    private DcMotor directMotor = null;
+    private CRServo downServo = null;
+    private CRServo upServo = null;
     
 
     @Override
@@ -80,17 +83,23 @@ public class Mecanum_Math extends LinearOpMode {
         frontrightmotor = hardwareMap.get(DcMotor.class, "frontrightmotor");
         backrightmotor = hardwareMap.get(DcMotor.class, "backrightmotor");
         backleftmotor = hardwareMap.get(DcMotor.class, "backleftmotor");
-        leftArm = hardwareMap.get(DcMotor.class, "hanging1");
-        rightArm = hardwareMap.get(DcMotor.class, "hanging2");
-        inputArm = hardwareMap.get(DcMotor.class, "inputArm");
+        hanging1 = hardwareMap.get(DcMotor.class, "hanging1");
+        hanging2 = hardwareMap.get(DcMotor.class, "hanging2");
+        directMotor = hardwareMap.get(DcMotor.class, "directmotor");
+        upServo = hardwareMap.get(CRServo.class, "upservo");
+        downServo = hardwareMap.get(CRServo.class, "downservo");
+        
         
         frontleftmotor.setPower(0.0);
         frontrightmotor.setPower(0.0);
         backleftmotor.setPower(0.0);
         backrightmotor.setPower(0.0);
-        leftArm.setPower(0.0);
-        rightArm.setPower(0.0);
-        inputArm.setPower(0.0);
+        hanging1.setPower(0.0);
+        hanging2.setPower(0.0);
+        directMotor.setPower(0.0);
+        upServo.setPower(0.0);
+        downServo.setPower(0.0);
+        
         
         
         
@@ -102,10 +111,10 @@ public class Mecanum_Math extends LinearOpMode {
         while (opModeIsActive()) {
 
             // Setup a variable for each drive wheel to save power level for telemetry
-            
             double rightMove;
             double leftMove;
-            double onePower;
+            double directPower;
+            double servoPower;
 
             
             // Choose to drive using either Tank Mode, or POV Mode
@@ -113,10 +122,10 @@ public class Mecanum_Math extends LinearOpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            onePower = -gamepad2.left_stick_y * 0.5;
             
             rightMove = -gamepad1.right_stick_y;
             leftMove = gamepad1.left_stick_y;
+            directPower = -gamepad2.left_stick_y;
             
             
             
@@ -138,28 +147,58 @@ public class Mecanum_Math extends LinearOpMode {
                 frontrightmotor.setPower(rightMove);
                 backrightmotor.setPower(rightMove);
             }
-            if(gamepad2.left_stick_y<0){
-                inputArm.setPower(onePower);
-            }
-            else if(gamepad2.left_stick_y>0){
-                inputArm.setPower(onePower);
-            }
-            else{
-                inputArm.setPower(0.15);
-            }
+            
+            
             if(gamepad2.right_bumper){
-                leftArm.setPower(-0.75);
-                rightArm.setPower(0.75);
+                hanging1.setPower(0.75);
+                hanging2.setPower(-0.75);
             }
             else if(gamepad2.left_bumper){
-                leftArm.setPower(0.75);
-                rightArm.setPower(-0.75);
+                hanging1.setPower(-0.75);
+                hanging2.setPower(0.75);
             }
             else{
-            leftArm.setPower(0.0);
-            rightArm.setPower(0.0);
+                hanging1.setPower(0.0);
+                hanging2.setPower(0.0);
             }
             
+            if(gamepad2.a == true){
+                servoPower = 0.8;
+                upServo.setPower(servoPower);
+                downServo.setPower(servoPower);
+                telemetry.addLine("Going Up Now");
+                telemetry.addData("Power of Both Servos now", servoPower);
+                
+            }
+            else if(gamepad2.b == true){
+                servoPower= -0.8;
+                upServo.setPower(servoPower);
+                downServo.setPower(servoPower);
+                telemetry.addLine("Going Down Now");
+                telemetry.addData("Power of Both Servos now", servoPower);
+            }
+            else{
+                servoPower = 0.0;
+                upServo.setPower(servoPower);
+                downServo.setPower(servoPower);
+                telemetry.addLine("Neither are moving");
+            }
+            
+            if(directPower>0.0 && directPower<=0.5){
+                directMotor.setPower(directPower * 0.5);
+            }
+            else if(directPower<0.0 && directPower>=-0.5){
+                directMotor.setPower(directPower * 0.5);
+            }
+            else if(directPower>0.5){
+                directMotor.setPower(directPower*0.75);
+            }
+            else if(directPower<-0.5){
+                directMotor.setPower(directPower*0.75);
+            }
+            else{
+                directMotor.setPower(0.0);
+            }
             
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
